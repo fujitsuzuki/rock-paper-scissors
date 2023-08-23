@@ -9,7 +9,7 @@ function getComputerChoice() {
 
 //get user choice
 function getUserChoice() {
-    const choice = 'scrissors';
+    const choice = prompt();
     if (validateUserChoice(choice)) {
         return choice.toLowerCase();
     } else {
@@ -30,18 +30,18 @@ function isPaper(userChoice) {
 }
 
 function isScrissors(userChoice) {
-    return userChoice.toLowerCase() === 'scrissors';
+    return userChoice.toLowerCase() === 'scissors';
 }
 
 //asses result
 function playRound(computerSelection, userSelection) {
     //paper vs scissors
     if (computerSelection === 'paper' && userSelection === 'scissors') {
-        return 'computer';
+        return 'user';
     }
     //paper vs rock
     if (computerSelection === 'paper' && userSelection === 'rock') {
-        return 'user';
+        return 'computer';
     }
     //scissors vs rock
     if (computerSelection === 'scissors' && userSelection === 'rock') {
@@ -65,9 +65,36 @@ function playRound(computerSelection, userSelection) {
     }
 }
 
-//state result
-const computer = getComputerChoice();
-const user = getUserChoice();
-console.log(computer);
-console.log(user);
-console.log(playRound(computer, user));
+//GAME ON
+
+//store scoring
+let userScore = 0;
+let computerScore = 0;
+//count games
+let gameCount = 0;
+
+let keepGoing = true;
+while (keepGoing) {
+    //play round
+    gameCount++;
+    //get choices
+    let computer = getComputerChoice();
+    let user = getUserChoice();
+    //get result
+    let result = playRound(computer, user);
+    //check results and append scores
+    if (result === 'user') {
+        userScore++;
+    } else if (result === 'computer') {
+        computerScore++;
+    }
+    //finish condition
+    if (gameCount === 5) {
+        keepGoing = false;
+        if (userScore > computerScore) {
+            alert('User won!');
+        } else {
+            alert('Computer won!');
+        }
+    }
+}
